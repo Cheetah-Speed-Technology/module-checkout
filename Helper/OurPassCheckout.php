@@ -247,9 +247,9 @@ class OurPassCheckout extends AbstractHelper
 
     public function referenceIsUnique($reference)
     {
-        $loadorder=$this->salesorder->addFieldToFilter('ourpass_order_id', $reference);
+        $loadOrder=$this->salesorder->addFieldToFilter('ourpass_order_id', $reference);
 
-        return $loadorder->getSize() < 1;
+        return $loadOrder->getSize() < 1;
     }
 
     protected function deleteQuoteCart($quote)

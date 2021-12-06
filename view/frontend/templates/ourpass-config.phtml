@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @var  \OurPass\Checkout\ViewModel\CheckoutButton $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+?>
+<script type="text/x-magento-init">
+    {
+    "*": {
+        "OurPass_Checkout/js/ourpass-config": {
+            "productDataUrl": "<?=
+                                /** @noEscape */
+                                $viewModel->getProductDataUrl() ?>",
+            "cartDataUrl": "<?=
+                            /** @noEscape */
+                            $viewModel->getCartDataUrl() ?>",
+            "cartCheckUrl": "<?=
+                                /** @noEscape */
+                                $viewModel->getCartCheckUrl() ?>",
+            "clearCartUrl": "<?=
+                                /** @noEscape */
+                                $viewModel->getClearCartUrl() ?>",
+            "createOrderUrl": "<?=
+                                /** @noEscape */
+                                $viewModel->getCreateOrderUrl() ?>",
+            "ourpassEnabled": <?= $viewModel->isOurPassEnabled() ? 'true' : 'false' ?>,
+            "buttonSize": "<?= $viewModel->getButtonSize() ?>",
+            "areAllProductsOurPass": <?= $viewModel->areAllProductsOurPass() ? 'true' : 'false' ?>,
+            "isProductOurPass": <?= $viewModel->isOurPassProduct() ? 'true' : 'false' ?>
+        }
+    }
+}
+</script>

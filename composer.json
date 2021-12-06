@@ -1,0 +1,21 @@
+{
+    "name": "ourpass/module-checkout",
+    "description": "Magento OurPass Checkout Extension - A Checkout and Payment solution for Magento using the OurPass checkout interface",
+    "version": "0.0.1",
+    "minimum-stability": "dev",
+    "type": "magento2-module",
+    "authors": [
+        {
+            "name": "OurPass Inc.",
+            "email": "hi@ourpass.co"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "OurPass\\Checkout\\": ""
+        }
+    }
+}

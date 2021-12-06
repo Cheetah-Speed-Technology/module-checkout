@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- custom module logger -->
+    <type name="OurPass\Checkout\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="OurPass\Checkout\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">OurPass_Checkout_Log</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">OurPass\Checkout\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- end custom module logger -->
+</config>

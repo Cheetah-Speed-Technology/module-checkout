@@ -1,0 +1,9 @@
+<!-- ko if: shouldShowOurPassButton() -->
+<div class="ourpass-button-wrapper">
+    <ourpass-checkout-button
+            data-bind="click: ourpassClick, attr: {'size': ourpassButtonSize()}"
+            id="ourpass-button-minicart">
+    </ourpass-checkout-button>
+    <span class="ourpass-or-text" translate="'OR'"/>
+</div>
+<!-- /ko -->

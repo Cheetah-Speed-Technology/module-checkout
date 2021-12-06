@@ -1,0 +1,6 @@
+/node_modules
+/view-assets
+.babelrc
+gulpfile.js
+package-lock.json
+package.json

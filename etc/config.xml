@@ -1,0 +1,26 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ourpass_integration>
+            <ourpass>
+                <enable>0</enable>
+                <test_mode>0</test_mode>
+                <debug>1</debug>
+                <button_size>default</button_size>
+                <test_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <live_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </ourpass>
+        </ourpass_integration>
+        <payment>
+            <ourpass>
+                <active>1</active>
+                <model>OurPass\Checkout\Model\Payment\OurPassPayment</model>
+                <title>Checkout with 0urPass</title>
+                <order_status>pending</order_status>
+                <allowspecific>1</allowspecific>
+                <specificcountry>NG</specificcountry>
+                <can_use_checkout>0</can_use_checkout>
+                <can_use_internal>1</can_use_internal>
+            </ourpass>
+        </payment>
+    </default>
+</config>

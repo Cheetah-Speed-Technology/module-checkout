@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * @var $block
+ * @var $viewModel CheckoutButton
+ */
+$viewModel = $block->getViewModel();
+
+if ($viewModel->isOurPassEnabled() && $viewModel->areAllProductsOurPass()) : ?>
+    <div class="ourpass-button-wrapper">
+        <ourpass-checkout-button id="ourpass-button" size="<?= $viewModel->getButtonSize() ?>"></ourpass-checkout-button>
+        <span class="ourpass-or-text"><?= $block->escapeHtml(__('OR')) ?></span>
+    </div>
+    <script>
+        require([
+                'jquery',
+                'ourpassConfig',
+                'Magento_Customer/js/customer-data',
+            ],
+            function(
+                $,
+                ourpassConfigFactory,
+                customerData
+            ) {
+                var ourpassConfig = ourpassConfigFactory();
+                var $checkoutButton = document.querySelector("#ourpass-button");
+
+                $checkoutButton.addEventListener("click", event => {
+                    $.ajax({
+                        method: "GET",
+                        url: ourpassConfig.getCartDataUrl(),
+                        dataType: 'json',
+                        showLoader: true
+                    }).success((response) => {
+                        try {
+                            OurpassCheckout.openIframe({
+                                env: response.data.env,
+                                api_key: response.data.api_key,
+                                reference: response.data.reference,
+                                amount: response.data.amount,
+                                qty: 1,
+                                name: response.data.name,
+                                email: response.data.email,
+                                description: response.data.description,
+                                src: response.data.src,
+                                url: response.data.url,
+                                items: response.data.items,
+                                metadata: response.data.metadata,
+                                onSuccess: (res) => {
+                                    $.ajax({
+                                        method: "POST",
+                                        url: ourpassConfig.getCreateOrderUrl(),
+                                        data: {
+                                            reference: response.data.reference,
+                                        },
+                                        dataType: 'json',
+                                        showLoader: true
+                                    }).success((data) => {
+                                        if (data.success) {
+                                            window.location.replace(ourpassConfig.getClearCartUrl());
+                                            return;
+                                        }
+                                        customerData.set('messages', {
+                                            messages: [{
+                                                text: 'Checkout successful but order not submitted, contact administrator.',
+                                                type: 'success'
+                                            }]
+                                        });
+                                    }).error((err) => {
+                                        customerData.set('messages', {
+                                            messages: [{
+                                                text: 'Checkout successful but order not submitted, contact administrator.',
+                                                type: 'success'
+                                            }]
+                                        });
+                                    });
+                                },
+                                onClose: () => {
+                                    customerData.set('messages', {
+                                        messages: [{
+                                            text: 'Checkout cancelled',
+                                            type: 'error'
+                                        }]
+                                    });
+                                }
+                            });
+                        } catch (error) {
+                            customerData.set('messages', {
+                                messages: [{
+                                    text: 'An error occur, please try again',
+                                    type: 'error'
+                                }]
+                            });
+                        }
+                    }).error((err) => {
+                        customerData.set('messages', {
+                            messages: [{
+                                text: err?.responseJSON?.message || 'Error, please try again',
+                                type: 'error'
+                            }]
+                        });
+                    })
+                });
+            });
+    </script>
+<?php endif; ?>

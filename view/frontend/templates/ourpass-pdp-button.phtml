@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @var Magento\Framework\View\Element\Template $block
+ * @var OurPass\Checkout\ViewModel\CheckoutButton $viewModel
+ */
+$viewModel = $block->getViewModel();
+?>
+<div id="pdp-ourpass-button" data-bind="scope:'ourpassCheckout'">
+    <!-- ko template: getTemplate() -->
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+            "#pdp-ourpass-button": {
+                "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+            }
+        }
+</script>

@@ -1,0 +1,12 @@
+{
+    "sales_order": {
+        "column": {
+            "ourpass_order_id": true
+        }
+    },
+    "sales_order_grid": {
+        "column": {
+            "ourpass_order_id": true
+        }
+    }
+}

@@ -139,24 +139,6 @@ class OurPassCheckout extends AbstractHelper
     }
 
     /**
-     * @return string
-     */
-    public function guid(): string
-    {
-        return sprintf(
-            '%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
-            random_int(0, 65535),
-            random_int(0, 65535),
-            random_int(0, 65535),
-            random_int(16384, 20479),
-            random_int(32768, 49151),
-            random_int(0, 65535),
-            random_int(0, 65535),
-            random_int(0, 65535)
-        );
-    }
-
-    /**
      * Create Order On Your Store
      *
      * @param array $orderData

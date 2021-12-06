@@ -1,6 +1,20 @@
+# IDEs
+.project
+.pydevproject
+.idea
+.settings
+
 /node_modules
+/vendor
+
+.env
+
 #/view-assets
 #.babelrc
 #gulpfile.js
 #package-lock.json
 #package.json
+#.env.sample
+#Dockerfile
+#auth.json
+#docker-compose.yml

@@ -24,19 +24,18 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            Block/*
-            Controller/*
-            etc/*
-            Helper/*
-            images/*
-            Logger/*
-            Model/*
-            Setup/*
-            Ui/*
-            view/*
-            ViewModel/*
+            Block/**
+            Controller/**
+            etc/**
+            Helper/**
+            images/**
+            Logger/**
+            Model/**
+            Setup/**
+            Ui/**
+            view/**
+            ViewModel/**
             composer.json
             LICENSE
             README.MD
             registration.php
-            !.babelrc

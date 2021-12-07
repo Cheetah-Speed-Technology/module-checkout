@@ -39,3 +39,4 @@ jobs:
             LICENSE
             README.MD
             registration.php
+            !.babelrc

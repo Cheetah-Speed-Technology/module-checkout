@@ -16,8 +16,7 @@
                 <model>OurPass\Checkout\Model\Payment\OurPassPayment</model>
                 <title>Checkout with 0urPass</title>
                 <order_status>pending</order_status>
-                <allowspecific>1</allowspecific>
-                <specificcountry>NG</specificcountry>
+                <allowspecific>0</allowspecific>
                 <can_use_checkout>0</can_use_checkout>
                 <can_use_internal>1</can_use_internal>
             </ourpass>

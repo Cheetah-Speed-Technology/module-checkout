@@ -158,7 +158,7 @@ class Create implements \Magento\Framework\App\Action\HttpPostActionInterface
             $result = $this->resultJsonFactory->create();
             return $result->setStatusHeader(400)->setData([
                 'success' => false,
-                'message' => $error->getMessage(),
+                'message' => $error->getMessage()
             ]);
         }
     }

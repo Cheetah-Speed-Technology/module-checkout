@@ -5,19 +5,20 @@ namespace OurPass\Checkout\Helper;
 use Magento\Sales\Model\Order;
 use Magento\Catalog\Model\Product;
 use OurPass\Checkout\Logger\Logger;
+use Magento\Framework\App\ObjectManager;
+use Magento\Quote\Model\QuoteManagement;
 use Magento\Framework\App\Helper\Context;
 use Magento\Customer\Model\CustomerFactory;
 use \Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\ObjectManager;
+use OurPass\Checkout\Model\Payment\OurPassPayment;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\Config\ReinitableConfigInterface;
-use Magento\Quote\Model\QuoteManagement;
-use OurPass\Checkout\Model\Config\OurPassIntegrationConfig;
 use \Magento\Sales\Model\ResourceModel\Sale\Collection;
+use Magento\Framework\App\Config\ReinitableConfigInterface;
+use OurPass\Checkout\Model\Config\OurPassIntegrationConfig;
 
 /**
  *
@@ -80,6 +81,11 @@ class OurPassCheckout extends AbstractHelper
      * @var Collection
      */
     protected $salesorder;
+
+    /**
+     * @var QuoteManagement
+     */
+    protected $quoteManagement;
 
 
     public function __construct(
@@ -154,13 +160,13 @@ class OurPassCheckout extends AbstractHelper
 
         $quote = $this->cartRepositoryInterface->get($quoteIdMask->getQuoteId());
 
-        // $quote->setStore($store);
+        $quote->setStore($store);
         $quote->setCurrency();
 
         $customer = $this->customerFactory->create();
         $customer->setWebsiteId($websiteId);
 
-        $customer->loadByEmail($orderData['email']); // load customer by email address
+        $customer->loadByEmail($orderData['email']);
 
         if (!$customer->getEntityId()) {
             $names = explode(" ", $orderData['name']);
@@ -226,10 +232,10 @@ class OurPassCheckout extends AbstractHelper
         //=CREATE SHIPPING METHOD AND ADD TO QUOTE
 
 
-        $quote->setPaymentMethod('ourpass');
+        $quote->setPaymentMethod(OurPassPayment::CODE);
         $quote->setInventoryProcessed(false);
         // Set Sales Order Payment
-        $quote->getPayment()->importData(['method' => 'ourpass']);
+        $quote->getPayment()->importData(['method' => OurPassPayment::CODE]);
         // Collect Totals & Save Quote
         $quote->collectTotals()->save();
 

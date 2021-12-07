@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace OurPass\Checkout\Model\Payment;
 
 use OurPass\Checkout\Helper\OurPassCheckout as OurPassCheckoutHelper;
@@ -168,6 +166,6 @@ class OurPassPayment extends AbstractMethod
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
     public function isAvailable(CartInterface $quote = null)
     {
-        return parent::isAvailable($quote);
+        return true;
     }
 }

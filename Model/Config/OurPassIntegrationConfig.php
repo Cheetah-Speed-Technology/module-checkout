@@ -7,10 +7,10 @@ use Magento\Store\Model\ScopeInterface;
 
 class OurPassIntegrationConfig
 {
-    const ENVIRONMENT = "sandbox"; //production | sandbox
+    const ENVIRONMENT = "production";
     const PRODUCTION_BASE_URL = "https://beta-api.ourpass.co";
     const SANDBOX_BASE_URL = "https://user-api-staging.ourpass.co";
-    const ORDER_PREFIX = "OURPASS_ORDER_"; //production | sandbox
+    const ORDER_PREFIX = "OURPASS_ORDER_";
     const XPATH_ENABLE = 'ourpass_integration/ourpass/enable';
     const XPATH_ENABLE_TEST_MODE = 'ourpass_integration/ourpass/test_mode';
     const XPATH_ENABLE_DEBUG_LOGGING = 'ourpass_integration/ourpass/debug';

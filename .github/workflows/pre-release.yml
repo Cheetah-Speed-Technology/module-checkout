@@ -26,6 +26,8 @@ jobs:
           rm -rf Dockerfile
           rm -rf auth.json
           rm -rf docker-compose.yml
+          git config --global user.email "akinwizguy@gmail.com"
+          git config --global user.name "Emmanuel Akinjole"
           git add . && git commit -m "build and remove non production files"
 
       - name: Create a latest tag and release

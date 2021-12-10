@@ -1,0 +1,58 @@
+name: "tag-release"
+
+on:
+  push:
+    branches:
+      - "release"
+
+jobs:
+  tag-release:
+    name: "Tag Release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get next tag version
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
+          release_branches: release
+
+      - name: Build & Delete non production files
+        env:
+          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_tag }}
+          NEW_TAG_CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
+        run: |
+          npm install
+          npm run build
+          rm -rf view-assets
+          rm -rf .babelrc
+          rm -rf gulpfile.js
+          rm -rf package-lock.json
+          rm -rf package.json
+          rm -rf .env.sample
+          rm -rf Dockerfile
+          rm -rf auth.json
+          rm -rf docker-compose.yml
+          rm -rf setup_magento
+          git config --global user.email "akinwizguy@gmail.com"
+          git config --global user.name "Emmanuel Akinjole"
+          git commit -am "${NEW_TAG_CHANGELOG}"
+
+      - name: Create and Push tag
+        env:
+          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_tag }}
+          NEW_TAG_CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
+        run: |
+          git tag -a ${NEW_TAG_VERSION} -m "${NEW_TAG_CHANGELOG}"
+          git push origin ${NEW_TAG_VERSION}
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}

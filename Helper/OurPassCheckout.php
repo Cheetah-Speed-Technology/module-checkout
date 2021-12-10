@@ -164,6 +164,7 @@ class OurPassCheckout extends AbstractHelper
 
         $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
 
+        /** @var \Magento\Quote\Model\Quote $quote **/
         $quote = $this->cartRepositoryInterface->get($quoteIdMask->getQuoteId());
 
         $quote->setStore($store);
@@ -250,13 +251,16 @@ class OurPassCheckout extends AbstractHelper
         /** @var \Magento\Sales\Model\Order $order **/
         $order = $this->quoteManagement->submit($quote);
         $order->setData('ourpass_order_id', $reference);
+        $order->addCommentToStatusHistory(sprintf(
+            __("OurPass checkout ID: %s"),
+            $reference
+        ));
         $order->save();
 
         $this->eventManager->dispatch('ourpass_checkout_verify_after', [
             "ourpass_order" => $order,
         ]);
 
-        // $order->setEmailSent(0);
         $this->deleteQuoteCart($quote);
 
         return ($order->getEntityId()) ? $order->getRealOrderId() : null;
@@ -274,6 +278,7 @@ class OurPassCheckout extends AbstractHelper
         $quoteId = $quote->getId();
 
         if ($quoteId) {
+            /** @var \Magento\Quote\Model\Quote $cart **/
             $cart = $this->cartRepositoryInterface->get($quoteId);
             $cart->delete();
         }

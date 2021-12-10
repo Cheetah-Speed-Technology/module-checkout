@@ -4,6 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
     <policies>
+        <policy id="default-src">
+            <values>
+                <value id="ourpass_default" type="host">*.ourpass.co</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="ourpass_frame" type="host">*.ourpass.co</value>
+            </values>
+        </policy>
         <policy id="img-src">
             <values>
                 <value id="data" type="host">data:</value>

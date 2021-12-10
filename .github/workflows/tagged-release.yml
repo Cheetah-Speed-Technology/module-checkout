@@ -29,6 +29,7 @@ jobs:
             images/**
             Logger/**
             Model/**
+            Observer/**
             Setup/**
             Ui/**
             view/**

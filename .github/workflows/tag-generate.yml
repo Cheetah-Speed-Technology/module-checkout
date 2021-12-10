@@ -19,10 +19,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dry_run: true
+          release_branches: release
 
       - name: Build & Delete non production files
         env:
-          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_version }}
+          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_tag }}
           NEW_TAG_CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
         run: |
           npm install
@@ -43,7 +44,7 @@ jobs:
 
       - name: Create and Push tag
         env:
-          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_version }}
+          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_tag }}
           NEW_TAG_CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
         run: |
           git tag -a ${NEW_TAG_VERSION} -m "${NEW_TAG_CHANGELOG}"

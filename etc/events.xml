@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="ourpass_checkout_verify_after">
+        <observer name="ourpass_checkout_verify_observer" instance="OurPass\Checkout\Observer\ObserverAfterCheckoutVerified" />
+    </event>
+</config>

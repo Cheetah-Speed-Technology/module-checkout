@@ -54,7 +54,7 @@ class Check implements \Magento\Framework\App\Action\HttpGetActionInterface
         $cartIsOurPass = true;
 
         foreach ($this->checkoutSession->getQuote()->getAllVisibleItems() as $cartItem) {
-            if ((int)$cartItem->getProduct()->getData('hide_ourpass_option') == 0) {
+            if ((int)$cartItem->getProduct()->getData('hide_ourpass_option') == 1) {
                 $cartIsOurPass = false;
             }
             //reject non enabled product types

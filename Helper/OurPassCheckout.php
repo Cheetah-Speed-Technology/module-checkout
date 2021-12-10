@@ -87,6 +87,10 @@ class OurPassCheckout extends AbstractHelper
      */
     protected $quoteManagement;
 
+    /**
+     * @var \Magento\Framework\Event\Manager
+     */
+    private $eventManager;
 
     public function __construct(
         Context $context,
@@ -103,7 +107,8 @@ class OurPassCheckout extends AbstractHelper
         QuoteIdMaskFactory $quoteIdMaskFactory,
         QuoteManagement $quoteManagement,
         Order $order,
-        Collection $salesorder
+        Collection $salesorder,
+        \Magento\Framework\Event\Manager $eventManager
     ) {
         $this->saveConfig = $saveconfig;
         $this->config = $config;
@@ -119,6 +124,7 @@ class OurPassCheckout extends AbstractHelper
         $this->quoteManagement = $quoteManagement;
         $this->order = $order;
         $this->salesorder = $salesorder;
+        $this->eventManager = $eventManager;
 
         parent::__construct($context);
     }
@@ -211,12 +217,12 @@ class OurPassCheckout extends AbstractHelper
 
         //CREATE SHIPPING METHOD AND ADD TO QUOTE
         $shippingQuoteRate = ObjectManager::getInstance()->get('\Magento\Quote\Model\Quote\Address\Rate');
-        $shippingRateCarrier = 'freeshipping';
-        $shippingRateCarrierTitle = 'Freeshipping';
-        $shippingRateCode = 'freeshipping_freeshipping';
-        $shippingRateMethod = 'freeshipping';
+        $shippingRateCarrier = 'ourpass';
+        $shippingRateCarrierTitle = 'OurPass';
+        $shippingRateCode = 'ourpass_ourpass';
+        $shippingRateMethod = 'ourpass';
         $shippingRatePrice = '0';
-        $shippingRateMethodTitle = 'Free shipping';
+        $shippingRateMethodTitle = 'OurPass shipping';
 
         $shippingAddress = $quote->getShippingAddress();
         $shippingQuoteRate->setCarrier($shippingRateCarrier);
@@ -241,11 +247,16 @@ class OurPassCheckout extends AbstractHelper
 
 
         // Create Order From Quote
+        /** @var \Magento\Sales\Model\Order $order **/
         $order = $this->quoteManagement->submit($quote);
         $order->setData('ourpass_order_id', $reference);
         $order->save();
 
-        $order->setEmailSent(0);
+        $this->eventManager->dispatch('ourpass_checkout_verify_after', [
+            "ourpass_order" => $order,
+        ]);
+
+        // $order->setEmailSent(0);
         $this->deleteQuoteCart($quote);
 
         return ($order->getEntityId()) ? $order->getRealOrderId() : null;

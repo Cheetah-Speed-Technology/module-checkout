@@ -11,9 +11,9 @@ define(['uiComponent', 'jquery', 'Magento_Customer/js/customer-data', 'ko', 'und
                 this._super();
                 self.shouldShowOurPassButton = ko.observable(ourpassConfig.shouldShowOurPassOnPDP());
                 $(document).ready(function () {
-                    $("#pdp-ourpass-button").css({
-                        'width': ($("#product-addtocart-button").outerWidth() + 'px')
-                    });
+                    // $("#pdp-ourpass-button").css({
+                    //     'width': ($("#product-addtocart-button").outerWidth() + 'px')
+                    // });
                     $("#pdp-ourpass-button").prependTo(".box-tocart .fieldset .actions");
                 });
             },
@@ -75,6 +75,7 @@ define(['uiComponent', 'jquery', 'Magento_Customer/js/customer-data', 'ko', 'und
                         showLoader: true
                     }).success((response) => {
                         try {
+                            let hasVerified = false;
                             OurpassCheckout.openIframe({
                                 env: response.data.env,
                                 api_key: response.data.api_key,
@@ -89,6 +90,10 @@ define(['uiComponent', 'jquery', 'Magento_Customer/js/customer-data', 'ko', 'und
                                 items: response.data.items,
                                 metadata: response.data.metadata,
                                 onSuccess: (res) => {
+                                    if (hasVerified) {
+                                        return;
+                                    }
+                                    hasVerified = true;
                                     $.ajax({
                                         method: "POST",
                                         url: ourpassConfig.getCreateOrderUrl(),
@@ -98,7 +103,6 @@ define(['uiComponent', 'jquery', 'Magento_Customer/js/customer-data', 'ko', 'und
                                         dataType: 'json',
                                         showLoader: true
                                     }).success((data) => {
-                                        console.log(data.success)
                                         if (data.success) {
                                             customerData.set('messages', {
                                                 messages: [{

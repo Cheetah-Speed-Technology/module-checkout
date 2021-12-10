@@ -204,7 +204,7 @@ class CheckoutButton implements ArgumentInterface
     {
         $product = $this->registry->registry('product');
 
-        if ($product !== null && (int)$product->getData('hide_ourpass_option') == 0) {
+        if ($product !== null && (int)$product->getData('hide_ourpass_option') == 1) {
             return false;
         }
         return true;
@@ -227,7 +227,7 @@ class CheckoutButton implements ArgumentInterface
     {
         //get all products in cart - if product is not ourpass able return false
         foreach ($this->checkoutSession->getQuote()->getAllVisibleItems() as $cartItem) {
-            if ((int)$cartItem->getProduct()->getData('hide_ourpass_option') == 0) {
+            if ((int)$cartItem->getProduct()->getData('hide_ourpass_option') == 1) {
                 return false;
             }
             //reject non enabled product types

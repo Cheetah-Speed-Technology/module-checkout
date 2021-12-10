@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Data patch to add show/hide ourpass checkout button attribute
  */
-class AddShowOurPassAttributePatch implements DataPatchInterface
+class AddHideOurPassAttributePatch implements DataPatchInterface
 {
     const DEPENDENCIES = [];
     const ALIASES = [];
@@ -83,7 +83,7 @@ class AddShowOurPassAttributePatch implements DataPatchInterface
     {
         $attributeData = [
             'type' => 'int',
-            'label' => 'Show OurPass Button',
+            'label' => 'Hide OurPass Button',
             'input' => 'boolean',
             'required' => true,
             'source' => Boolean::class,
@@ -94,9 +94,9 @@ class AddShowOurPassAttributePatch implements DataPatchInterface
             'visible_on_front' => true,
             'user_defined' => false,
             'filterable' => true,
-            'filterable_in_search' => true,
-            'used_for_promo_rules' => true,
-            'is_html_allowed_on_front' => true,
+            'filterable_in_search' => false,
+            'used_for_promo_rules' => false,
+            'is_html_allowed_on_front' => false,
             'used_for_sort_by' => false
         ];
         try {

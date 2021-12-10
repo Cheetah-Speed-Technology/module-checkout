@@ -59,6 +59,7 @@ define([
                 showLoader: true
             }).success((response) => {
                 try {
+                    let hasVerified = false;
                     OurpassCheckout.openIframe({
                         env: response.data.env,
                         api_key: response.data.api_key,
@@ -73,6 +74,10 @@ define([
                         items: response.data.items,
                         metadata: response.data.metadata,
                         onSuccess: (res) => {
+                            if (hasVerified) {
+                                return;
+                            }
+                            hasVerified = true;
                             $.ajax({
                                 method: "POST",
                                 url: ourpassConfig.getCreateOrderUrl(),

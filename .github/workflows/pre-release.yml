@@ -11,24 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Build & Delete non production files
-        run: |
-          npm install
-          npm run build
-          rm -rf view-assets
-          rm -rf .babelrc
-          rm -rf gulpfile.js
-          rm -rf package-lock.json
-          rm -rf package.json
-          rm -rf .env.sample
-          rm -rf Dockerfile
-          rm -rf auth.json
-          rm -rf docker-compose.yml
-          git config --global user.email "akinwizguy@gmail.com"
-          git config --global user.name "Emmanuel Akinjole"
-          git add . && git commit -m "build and remove non production files"
+        uses: actions/checkout@v2        
 
       - name: Create a latest tag and release
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -54,12 +37,43 @@ jobs:
             LICENSE
             README.MD
             registration.php
+        run: |
+          npm install
+          npm run build
+          rm -rf view-assets
+          rm -rf .babelrc
+          rm -rf gulpfile.js
+          rm -rf package-lock.json
+          rm -rf package.json
+          rm -rf .env.sample
+          rm -rf Dockerfile
+          rm -rf auth.json
+          rm -rf docker-compose.yml
+          git config --global user.email "akinwizguy@gmail.com"
+          git config --global user.name "Emmanuel Akinjole"
+          git commit -am "build and remove non production files"
 
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          append_to_pre_release_tag: false
+        run: |
+          npm install
+          npm run build
+          rm -rf view-assets
+          rm -rf .babelrc
+          rm -rf gulpfile.js
+          rm -rf package-lock.json
+          rm -rf package.json
+          rm -rf .env.sample
+          rm -rf Dockerfile
+          rm -rf auth.json
+          rm -rf docker-compose.yml
+          git config --global user.email "akinwizguy@gmail.com"
+          git config --global user.name "Emmanuel Akinjole"
+          git commit -am "build and remove non production files"
           
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
@@ -67,3 +81,18 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
+        run: |
+          npm install
+          npm run build
+          rm -rf view-assets
+          rm -rf .babelrc
+          rm -rf gulpfile.js
+          rm -rf package-lock.json
+          rm -rf package.json
+          rm -rf .env.sample
+          rm -rf Dockerfile
+          rm -rf auth.json
+          rm -rf docker-compose.yml
+          git config --global user.email "akinwizguy@gmail.com"
+          git config --global user.name "Emmanuel Akinjole"
+          git commit -am "build and remove non production files"

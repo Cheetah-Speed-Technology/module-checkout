@@ -13,9 +13,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Get next tag version
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
+
       - name: Build & Delete non production files
+        env:
+          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_tag }}
+          NEW_TAG_CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
         run: |
-          git checkout -b "release-build"
           npm install
           npm run build
           rm -rf view-assets
@@ -27,32 +36,15 @@ jobs:
           rm -rf Dockerfile
           rm -rf auth.json
           rm -rf docker-compose.yml
+          rm -rf setup_magento
           git config --global user.email "akinwizguy@gmail.com"
           git config --global user.name "Emmanuel Akinjole"
-          git commit -am "build and remove non production files"
-          git push --set-upstream origin release-build
+          git commit -am "${NEW_TAG_CHANGELOG}"
 
-      # - name: Create a latest tag and release
-      #   uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     automatic_release_tag: "latest"
-      #     prerelease: true
-      #     title: "Development Build"
-      #     files: |
-      #       Block/**
-      #       Controller/**
-      #       etc/**
-      #       Helper/**
-      #       images/**
-      #       Logger/**
-      #       Model/**
-      #       Observer/**
-      #       Setup/**
-      #       Ui/**
-      #       view/**
-      #       ViewModel/**
-      #       composer.json
-      #       LICENSE
-      #       README.MD
-      #       registration.php
+      - name: Create and Push tag
+        env:
+          NEW_TAG_VERSION: ${{ steps.tag_version.outputs.new_tag }}
+          NEW_TAG_CHANGELOG: ${{ steps.tag_version.outputs.changelog }}
+        run: |
+          git tag -a ${NEW_TAG_VERSION} -m "${NEW_TAG_CHANGELOG}"
+          git push origin ${NEW_TAG_VERSION}

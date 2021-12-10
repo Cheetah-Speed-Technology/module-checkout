@@ -19,6 +19,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dry_run: true
+          append_to_pre_release_tag: false
 
       - name: Build & Delete non production files
         env:

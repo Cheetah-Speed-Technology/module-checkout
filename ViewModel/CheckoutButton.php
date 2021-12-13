@@ -230,8 +230,7 @@ class CheckoutButton implements ArgumentInterface
             if ((int)$cartItem->getProduct()->getData('hide_ourpass_option') == 1) {
                 return false;
             }
-            //reject non enabled product types
-            if (!in_array($cartItem->getProductType(), $this->ourPassConfig->getProcessableProductType())) {
+            if (!in_array($cartItem->getProductType(), $this->ourpassIntegrationConfig->getProcessableProductType())) {
                 return false;
             }
         }

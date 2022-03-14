@@ -156,13 +156,17 @@ class Ourpass {
   // Close Functions
   // Close Button
   g() {
-    this.removeElement("ourpassParentModal")
+    this.removeElement("ourpassParentModal");
+    this.removeStyleOnBody();
+    this.clientInfo.onClose();
+  }
+
+  removeStyleOnBody() {
     // WINDOW BEHIND BACKDROP RESUME SCROLLING
     const scrollY = document.body.style.top;
     document.body.style.position = '';
     document.body.style.top = '';
     window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    this.clientInfo.onClose()
   }
 
   // click Modal
@@ -274,6 +278,7 @@ class Ourpass {
         // SUCCESS
         if (event.data == 'false pass1') {
           this.removeElement(backDropElement)
+          this.removeStyleOnBody()
           this.clientInfo.onSuccess(this.clientInfo)
         }
       }

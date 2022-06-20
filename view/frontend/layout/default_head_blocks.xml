@@ -3,8 +3,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="OurPass_Checkout::css/ourpass-font.css"/>
+        <script src="https://cdn.jsdelivr.net/gh/Cheetah-Speed-Technology/core-cdn@1.0.5/cdn.js" src_type="url"/>
         <script src="OurPass_Checkout::js/native-shim.js"/>
-        <script src="OurPass_Checkout::js/ourpass-cdn.js"/>
         <script src="OurPass_Checkout::js/ourpass-button.js"/>
     </head>
 

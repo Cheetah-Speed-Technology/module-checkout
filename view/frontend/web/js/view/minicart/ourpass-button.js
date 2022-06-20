@@ -63,6 +63,7 @@ define([
                     OurpassCheckout.openIframe({
                         env: response.data.env,
                         api_key: response.data.api_key,
+                        subAccountAuthKey: response.data.sub_account_key,
                         reference: response.data.reference,
                         amount: response.data.amount,
                         qty: 1,

@@ -9,6 +9,11 @@
                 <value id="ourpass_default" type="host">*.ourpass.co</value>
             </values>
         </policy>
+        <policy id="script-src">
+            <values>
+                <value id="ourpass_script" type="host">cdn.jsdelivr.net</value>
+            </values>
+        </policy>
         <policy id="frame-src">
             <values>
                 <value id="ourpass_frame" type="host">*.ourpass.co</value>

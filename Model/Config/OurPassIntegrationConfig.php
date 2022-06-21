@@ -7,9 +7,8 @@ use Magento\Store\Model\ScopeInterface;
 
 class OurPassIntegrationConfig
 {
-    const ENVIRONMENT = "production";
     const PRODUCTION_BASE_URL = "https://beta-api.ourpass.co";
-    const SANDBOX_BASE_URL = "https://user-api-staging.ourpass.co";
+    const SANDBOX_BASE_URL = "https://api-pass-sandbox.ourpass.co";
     const ORDER_PREFIX = "OURPASS_ORDER_";
     const XPATH_ENABLE = 'ourpass_integration/ourpass/enable';
     const XPATH_ENABLE_TEST_MODE = 'ourpass_integration/ourpass/test_mode';
@@ -18,6 +17,7 @@ class OurPassIntegrationConfig
     const XPATH_TEST_PUBLIC_KEY = 'ourpass_integration/ourpass/test_public_key';
     const XPATH_LIVE_SECRET_KEY = 'ourpass_integration/ourpass/live_secret_key';
     const XPATH_LIVE_PUBLIC_KEY = 'ourpass_integration/ourpass/live_public_key';
+    const XPATH_SUB_ACCOUNT_KEY = 'ourpass_integration/ourpass/sub_account_key';
     const XPATH_BUTTON_SIZE = 'ourpass_integration/ourpass/button_size';
 
     /**
@@ -39,7 +39,7 @@ class OurPassIntegrationConfig
      */
     public function getEnvironment(): string
     {
-        return self::ENVIRONMENT;
+        return $this->isProduction() ? 'production' : 'sandbox';
     }
 
     /**
@@ -131,6 +131,14 @@ class OurPassIntegrationConfig
             return $this->scopeConfig->getValue(static::XPATH_LIVE_PUBLIC_KEY);
         }
         return $this->scopeConfig->getValue(static::XPATH_TEST_PUBLIC_KEY);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubAccountKey(): string
+    {
+        return (string) $this->scopeConfig->getValue(static::XPATH_SUB_ACCOUNT_KEY);
     }
 
     /**

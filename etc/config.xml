@@ -8,6 +8,7 @@
                 <button_size>default</button_size>
                 <test_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
                 <live_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sub_account_key></sub_account_key>
             </ourpass>
         </ourpass_integration>
         <payment>

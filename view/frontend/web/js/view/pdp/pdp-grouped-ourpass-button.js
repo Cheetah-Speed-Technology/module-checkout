@@ -59,6 +59,7 @@ define(['uiComponent', 'jquery', 'Magento_Customer/js/customer-data', 'ko', 'und
                             OurpassCheckout.openIframe({
                                 env: response.data.env,
                                 api_key: response.data.api_key,
+                                subAccountAuthKey: response.data.sub_account_key,
                                 reference: response.data.reference,
                                 amount: response.data.amount,
                                 qty: 1,

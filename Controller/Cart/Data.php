@@ -98,6 +98,7 @@ class Data implements \Magento\Framework\App\Action\HttpGetActionInterface
 
             $ourpass_data['env'] = $this->ourPassIntegrationConfig->getEnvironment();
             $ourpass_data['api_key'] = $this->ourPassIntegrationConfig->getSecretKey();
+            $ourpass_data['sub_account_key'] = $this->ourPassIntegrationConfig->getSubAccountKey();
             $ourpass_data['reference'] = $referenceCode;
             $ourpass_data['amount'] = floatval($this->checkoutSession->getQuote()->getSubtotal());
             $ourpass_data['qty'] = 1;
